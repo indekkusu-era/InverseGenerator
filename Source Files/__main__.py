@@ -33,8 +33,8 @@ class InverseGenerator(Tk):
         self.file = applyToFile(self.label['text'])
         bookmarks = self.file.bookmarks
         self.bookmarklabel = []
-        for i in bookmarks:
-            self.bookmarklabel.append(ttk.Label(self.run, text="Start: {}, End: {}, LN gap: 1/".format(i[0], i[1])))
+        for start, end in bookmarks:
+            self.bookmarklabel.append(ttk.Label(self.run, text="Start: {}, End: {}, LN gap: 1/".format(start, end)))
         self.entries = [ttk.Entry(self.run) for k in self.bookmarklabel]
         i = 1
         for a, b in zip(self.bookmarklabel, self.entries):

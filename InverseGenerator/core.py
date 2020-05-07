@@ -106,9 +106,12 @@ class applyToFile:
     def __init__(self, osufile):
         with open(osufile, "r") as f:
             f = f.readlines()
-            bookmarks = f[f.index("[Editor]\n") + 1][len("Bookmarks: "):]
-            bookmarks = bookmarks[:len(bookmarks) - 1]
-            bookmarks = [int(i) for i in bookmarks.split(",")]
+            try:
+                bookmarks = f[f.index("[Editor]\n") + 1][len("Bookmarks: "):]
+                bookmarks = bookmarks[:len(bookmarks) - 1]
+                bookmarks = [int(i) for i in bookmarks.split(",")]
+            except:
+                bookmarks = [0]
             if len(bookmarks) % 2 == 1:
                 # add the last note position
                 bookmarks.append(int(f[-2].split(",")[2]))
@@ -134,7 +137,7 @@ class applyToFile:
         if len(gap) < len(self.bookmarks):
             self.bookmarks = self.bookmarks[:len(gap)]
         elif len(gap) > len(self.bookmarks):
-            gap = gap[len(self.bookmarks)]
+            gap = gap[:len(self.bookmarks)]
         for i in range(len(gap)):
             start = self.bookmarks[i][0]
             end = self.bookmarks[i][1]
